@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Prisma } from 'generated/prisma';
 
@@ -11,5 +11,10 @@ export class UserController {
         @Body() userData: Prisma.UserCreateInput
     ) {
         return this.userService.createUser(userData)
+    }
+
+    @Get('userlist')
+    async userList() {
+        return this.userService.user
     }
 }
