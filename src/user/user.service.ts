@@ -8,15 +8,23 @@ export class UserService {
     @Inject()
     private readonly prisma: PrismaService
 
-    async user(userWhereUniqueInput: Prisma.UserWhereUniqueInput): Promise<User | null> {
+    async user(userWhereUniqueInput: Prisma.UserWhereUniqueInput): Promise<Omit<User, 'password'> | null> {
         return this.prisma.user.findUnique({
-            where: userWhereUniqueInput
+            where: userWhereUniqueInput,
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                password: false,
+                createdAt: true,
+                updatedAt: true
+            }
         })
     }
 
     async createUser(data: Prisma.UserCreateInput) {
         const hastPassword = await bcrypt.hash(data.password, 10)
-        return this.prisma.user.create({ data: {...data, password: hastPassword } })
+        return this.prisma.user.create({ data: { ...data, password: hastPassword } })
     }
 
     async updateUser(params: {

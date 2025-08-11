@@ -25,18 +25,18 @@ export class AnswersService {
   }
 
   findAll() {
-    return this.prisma.questions.findMany()
+    return this.prisma.answers.findMany()
   }
 
   findOne(id: number) {
-    return this.prisma.questions.findUnique({where: {id}})
+    return this.prisma.answers.findUnique({where: {id}})
   }
 
   update(id: number, updateAnswerDto: UpdateAnswerDto) {
-    return this.prisma.questions.update({where: {id}, data: updateAnswerDto})
+    return this.prisma.answers.update({where: {id}, data: updateAnswerDto})
   }
 
   remove(id: number) {
-    return this.prisma.questions.delete({where: {id}})
+    return this.prisma.answers.delete({where: {id}})
   }
 }

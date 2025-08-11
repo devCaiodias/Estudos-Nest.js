@@ -15,11 +15,19 @@ export class QuestionsService {
   }
 
   async findAll() {
-    return await this.prima.questions.findMany()
+    return await this.prima.questions.findMany({
+      include: {answers: true, user: {select: {
+      name: true,
+      email: true
+    }} }
+    })
   }
 
   async findOne(id: number) {
-    return await this.prima.questions.findUnique({where: {id}})
+    return await this.prima.questions.findUnique({where: {id}, include: {answers: true, user: {select: {
+      name: true,
+      email: true
+    }} }})
   }
 
   async update(id: number, updateQuestionDto: UpdateQuestionDto) {
